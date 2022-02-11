@@ -1,4 +1,6 @@
+import { Typography } from '@mui/material';
 import Head from 'next/head';
+import Link from 'next/Link'
 
 
 export default function Home() {
@@ -10,7 +12,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>please change in the url ... </h1>
+      <Typography component='h1' align='center'>please change in the url ... </Typography>
+
+      <Link href='/products/1'>
+        <a> go to first product</a>
+      </Link>
     </div>
   )
 }
