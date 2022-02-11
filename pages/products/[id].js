@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-import { makeStyles } from '@mui/styles';
+import { makeStyles, styled } from '@mui/styles';
 import { useRouter } from 'next/router';
-import { CardMedia, Typography } from '@mui/material';
-
+import { Button, CardMedia, Rating, Typography } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShareIcon from '@mui/icons-material/Share';
 
 const useStyles = makeStyles(theme => ({
     body: {
@@ -16,21 +17,21 @@ const useStyles = makeStyles(theme => ({
     },
 
     root: {
-        width: '90%',
+        width: '80%',
         height: '75%',
         display: 'flex',
-        borderRadius: 5,
+        borderRadius: theme.shape.borderRadius,
     },
 
     imageWrapper: {
         width: '27%',
         height: '100%',
         backgroundImage: 'linear-gradient(#69FDC7, #44CACA)',
-        position:'relative'
+        position: 'relative'
     },
     image: {
-        maxWidth: '100%',
-        maxHeight: '70%',
+        width: '100%',
+        height: '70%',
         position: 'absolute',
         top: '50%',
         left: '-10%',
@@ -39,10 +40,42 @@ const useStyles = makeStyles(theme => ({
 
     content: {
         flex: 1,
-        backgroundColor: 'orange'
+        backgroundColor: '#ffffff',
+        padding: theme.spacing(4, 3),
+        display: 'flex',
+        // flexWrap: 'wrap',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+
+    info: {
+        // border: '1px solid red',
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
+
+    description: {
+        // border: '1px solid blue',
+    },
+
+    footer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+
+    button: {
+        background: 'linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%)',
+        color: 'white',
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, 0.3)',
+    },
+
+    rating: {
+        color: theme.palette.secondary.main,
     }
 
 }));
+
 
 
 export default function Product({ product }) {
@@ -51,8 +84,8 @@ export default function Product({ product }) {
     const classes = useStyles();
     const router = useRouter();
 
-    console.log(product);
-
+console.log(product);
+    //* useEffect
     useEffect(
         () => {
             if (!product) {
@@ -73,7 +106,6 @@ export default function Product({ product }) {
             <div className={classes.root}>
 
                 <div className={classes.imageWrapper}>
-
                     <img
                         className={classes.image}
                         src={product.image}
@@ -81,10 +113,46 @@ export default function Product({ product }) {
                     />
                 </div>
 
-                <div className={classes.content}>right</div>
+                <div className={classes.content}>
 
+                    <div className={classes.info}>
+                        <div>
+                            <Typography variant='div' component={'h1'}>{product.title}</Typography>
+                            <Typography color='primary' variant="div" component="h5" >{product.category.toUpperCase()}</Typography>
+                            <Typography color='secondary'>$ {product.price}</Typography>
+                        </div>
+
+                        <Rating
+                            className={classes.rating}
+                            value={product.rating.rate}
+                            precision={0.1}
+                            readOnly
+                        />
+                    </div>
+
+                    <div className={classes.description}>
+                        <Typography variant="div" component="h4">DESCRIPTION</Typography>
+                        <Typography color='primary' component='p'>{product.description}</Typography>
+
+                    </div>
+
+                    <div className={classes.footer}>
+                        <Button
+                            startIcon={<ShoppingCartIcon />}
+                            variant='outlined'
+                            className={classes.button}
+                        >
+                            add to cart
+                        </Button>
+
+                        <ShareIcon color='primary' />
+
+                    </div>
+
+                </div>
             </div>
-        </div>
+
+        </div >
     )
 }
 
